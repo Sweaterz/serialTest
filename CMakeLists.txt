@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+﻿cmake_minimum_required(VERSION 3.5)
 
 project(serialTest LANGUAGES CXX)
 
@@ -24,12 +24,57 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #    endif()
 #endif()
 
-find_package(Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
+find_package(Qt5 COMPONENTS Widgets LinguistTools Core REQUIRED)
 
-set(TS_FILES serialTest_zh_CN.ts)
+#set(TS_FILES serialTest_zh_CN.ts)
+
+set(serial_SRCS
+    src/serial.cc
+    include/serial/serial.h
+    include/serial/v8stdint.h
+)
+if(APPLE)
+    # If OSX
+    list(APPEND serial_SRCS src/impl/unix.cc)
+    list(APPEND serial_SRCS src/impl/list_ports/list_ports_osx.cc)
+elseif(UNIX)
+    # If unix
+    list(APPEND serial_SRCS src/impl/unix.cc)
+    list(APPEND serial_SRCS src/impl/list_ports/list_ports_linux.cc)
+else()
+    # If windows
+    list(APPEND serial_SRCS src/impl/win.cc)
+    list(APPEND serial_SRCS src/impl/list_ports/list_ports_win.cc)
+endif()
+
+## Add serial library
+add_library(${PROJECT_NAME} ${serial_SRCS})
+if(APPLE)
+    target_link_libraries(${PROJECT_NAME} ${FOUNDATION_LIBRARY} ${IOKIT_LIBRARY})
+elseif(UNIX)
+    target_link_libraries(${PROJECT_NAME} rt pthread)
+else()
+    target_link_libraries(${PROJECT_NAME} setupapi)
+endif()
+
+#Include headers
+target_include_directories(${PROJECT_NAME} PUBLIC include)
+
+
+#Install executable
+install(TARGETS ${PROJECT_NAME}
+    ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+    LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+    RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
+)
+# Install headers
+install(FILES include/serial/serial.h include/serial/v8stdint.h
+    DESTINATION ${CATKIN_GLOBAL_INCLUDE_DESTINATION}/serial)
+
+
 
 if(ANDROID)
-  add_library(serialTest SHARED
+  add_library(serialTool SHARED
     main.cpp
     mainwindow.cpp
     mainwindow.h
@@ -37,15 +82,19 @@ if(ANDROID)
     ${TS_FILES}
   )
 else()
-  add_executable(serialTest
+  add_executable(serialTool
     main.cpp
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+    receivethread.cpp
+    receivethread.h
     ${TS_FILES}
   )
 endif()
+add_dependencies(serialTool ${PROJECT_NAME})
 
-target_link_libraries(serialTest PRIVATE Qt5::Widgets)
+target_link_libraries(serialTool PRIVATE ${PROJECT_NAME} Qt5::Widgets Qt5::Core)
+include_directories(include)
 
 qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
