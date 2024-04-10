@@ -76,7 +76,7 @@ void MainWindow::openSerial()
 
         receive_t = new receiveThread();
         connect(receive_t, &receiveThread::receiveData, this, &MainWindow::showData);
-
+        std::cout << baudrate << std::endl;
         receive_t->set(port, baudrate);
         receive_t->start();
 
@@ -103,14 +103,51 @@ void MainWindow::showData(const QString& data)
     {
         std::cout << "十六进制输出模式" << std::endl;
         bool ok;
-        std::vector<uint8_t> hexData;
-        std::vector<std::string> hexStrData;
+//        std::vector<uint8_t> hexData;
+//        std::vector<std::string> hexStrData;
+        std::cout << data.size() << std::endl;
+        std::string hexData = data.toStdString();
+        std::cout << hexData.size() << std::endl;
 
-        for(int i = 0; i < data.size(); i++)
+        for(auto hex: hexData)
         {
-            std::cout << data[i].unicode() << std::endl;
-            hexData.push_back(data[i].unicode());
+            std::cout << hex << std::endl;
         }
+//        for(int i = 0; i < data.size(); i++)
+//        {
+//            std::stringstream hexStr;
+//            uint32_t hex_value = data[i].unicode();
+//            hexStr << std::hex << hex_value;
+//            hexData.push_back(hex_value);
+//            hexStrData.push_back(hexStr.str());
+//            std::cout << hex_value <<std::endl;
+//            std::cout << hexStr.str() << std::endl;
+
+
+//        }
+//        for(auto character: data)
+//        {
+//            character.
+
+//            std::cout << static_cast<uint8_t>(character) << std::endl;
+//            std::cout << static_cast<uint16_t>(character) << std::endl;
+
+//            std::stringstream hexStr;
+
+//            std::cout << static_cast<int>(character.unicode()) << std::endl;
+
+//            uint8_t hex_value = static_cast<uint8_t>(character.unicode() & 0xFF);
+//            int hex_value2 = static_cast<int>(hex_value);
+//            hexStr << std::hex << hex_value2;
+
+//            std::cout << static_cast<int>(hex_value) << std::endl;
+//            std::cout << hexStr.str() << std::endl;
+//            hexData.push_back(hex_value);
+//            hexStrData.push_back(hexStr.str());
+//        }
+
+
+
         std::cout << data.toStdString() << std::endl;
 
     }
@@ -133,13 +170,11 @@ void MainWindow::clearInfo()
 //实现右键菜单清除功能
 void MainWindow::slotCustomMenuRequested(QPoint pos)
 {
-
     QMenu *menu = new QMenu(this);
     QAction* clearInfo = new QAction("清除信息", this);
     connect(clearInfo, &QAction::triggered, this, &MainWindow::clearInfo);
     menu->addAction(clearInfo);
 //    menu->addAction(new QAction("Action 2", this));
-//    menu->addAction(new QAction("Action 3", this));
     menu->popup(ui->receiveDataArea->mapToGlobal(pos));
 }
 

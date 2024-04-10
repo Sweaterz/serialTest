@@ -39,9 +39,18 @@ void receiveThread::run()
         if(len > 0)
         {
             std::string data;
-            openedPort.readline(data);//这里默认换行是'\n'
+            data = openedPort.readline();//这里默认换行是'\n'
             std::cout << "read data:" << data << std::endl;
-            this->m_data = QString(data.c_str());
+
+            this->m_data = QString(QLatin1String(data.c_str()));
+            std::cout << m_data.toUtf8().constData() << std::endl;
+            std::string data2 = m_data.toUtf8().constData();
+            std::cout << data2.size() << std::endl;
+            std::cout << static_cast<uint8_t>(data2[0]) << std::endl;
+            std::cout << static_cast<int>(static_cast<uint8_t>(data[0])) << std::endl;
+
+
+
             emit receiveData(this->m_data);
         }
     }
