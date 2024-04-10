@@ -32,6 +32,8 @@ private:
     void openSerial();
     void clearInfo();
     void showData(const QString&);
+    void slotCustomMenuRequested(QPoint pos);
+
 
 };
 #endif // MAINWINDOW_H

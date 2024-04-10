@@ -24,6 +24,7 @@ void receiveThread::run()
     if(!openedPort.isOpen())
     {
         std::cout << "serial open failed" << std::endl;
+        return;
     }
     else
     {
