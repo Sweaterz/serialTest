@@ -89,6 +89,7 @@ else()
     mainwindow.ui
     receivethread.cpp
     receivethread.h
+    crc.h
     ${TS_FILES}
   )
 endif()

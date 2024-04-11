@@ -18,10 +18,12 @@ public:
     void set(std::string port, uint32_t baudrate);
     void run();
     void stop();
+    void parseData();
+
 signals:
-    void receiveData(const QString&);
+    void receiveData(const QByteArray&);
 private:
-    QString m_data;
+    QByteArray m_data;
 
 };
 

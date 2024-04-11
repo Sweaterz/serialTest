@@ -2,17 +2,15 @@
 #define MAINWINDOW_H
 
 #include <iostream>
-
-#include "mainwindow.h"
-#include "./ui_mainwindow.h"
-
-#include "serial/serial.h"
 #include <QDebug>
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QThread>
-
+#include "mainwindow.h"
+#include "./ui_mainwindow.h"
+#include "serial/serial.h"
 #include "receivethread.h"
+#include "crc.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -31,8 +29,9 @@ private:
     void initSerial();
     void openSerial();
     void clearInfo();
-    void showData(const QString&);
+    void showData(const QByteArray&);
     void slotCustomMenuRequested(QPoint pos);
+    int parseData(std::vector<uint8_t>&);
 
 
 };

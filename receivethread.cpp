@@ -38,16 +38,24 @@ void receiveThread::run()
 
         if(len > 0)
         {
-            std::string data;
-            data = openedPort.readline();//这里默认换行是'\n'
-            std::cout << "read data:" << data << std::endl;
+            QString data;
+            std::string originData;
+            originData = openedPort.readline(65535, "\r\n");//这里默认换行是'\n'
+            std::cout << "read data:" << originData.size()<< std::endl;
 
-            this->m_data = QString(QLatin1String(data.c_str()));
-            std::cout << m_data.toUtf8().constData() << std::endl;
-            std::string data2 = m_data.toUtf8().constData();
-            std::cout << data2.size() << std::endl;
-            std::cout << static_cast<uint8_t>(data2[0]) << std::endl;
-            std::cout << static_cast<int>(static_cast<uint8_t>(data[0])) << std::endl;
+//            QByteArray bytedata = originData.c_str();
+            QByteArray bytedata = QByteArray::fromStdString(originData);
+
+            std::cout << bytedata.size() << std::endl;
+            data = originData.c_str();
+            std::cout << data.size() << std::endl;
+
+            this->m_data = bytedata;
+//            std::cout << m_data.toUtf8().constData() << std::endl;
+//            std::string data2 = m_data.toUtf8().constData();
+            std::cout << data.size() << std::endl;
+//            std::cout << static_cast<uint8_t>(data2[0]) << std::endl;
+//            std::cout << static_cast<int>(static_cast<uint8_t>(data[0])) << std::endl;
 
 
 
