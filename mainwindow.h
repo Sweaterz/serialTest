@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <iostream>
+#include <cstdlib>
+#include <iomanip>      // std::put_time
+#include <ctime>
 #include <QDebug>
 #include <QMainWindow>
 #include <QMessageBox>
@@ -28,10 +31,16 @@ private:
     Ui::MainWindow *ui;
     void initSerial();
     void openSerial();
-    void clearInfo();
+    void updateReceiveAreaCurrentRow();
+    void updateParseAreaCurrentRow();
+
     void showData(const QByteArray&);
     void slotCustomMenuRequested(QPoint pos);
     int parseData(std::vector<uint8_t>&);
+    void clearSelectedInfo();
+    void clearInfo();
+    std::string getCurrentTime();
+
 
 
 };
