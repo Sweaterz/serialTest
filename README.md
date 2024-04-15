@@ -1,8 +1,17 @@
 # 一款用于特定场景的串口调试工具
 ## A Serial Tool on Specific Environment
 
-本项目还在开发中.  
-This project is developing.
+
+本项目已经发布。你可以在[**Releases**](https://github.com/Sweaterz/serialTest/releases)中下载对应版本。
+
+The project has already been released. You can download it from [**Releases**](https://github.com/Sweaterz/serialTest/releases) right now!
+
+
+
+### 已发布版本
+### Released Version
+v1.0.1
+
 
 ### Todo List:
 - [x] UI布局  UI layout
@@ -12,8 +21,9 @@ This project is developing.
 
 ### Support Operating system:
 
-- [x] Ubuntu
-- [ ] Windows(developing)
+- [x] Ubuntu 20.04
+- [X] Windows 10
 
 If you have any question, you can put it on the Issues. 
 First edit on 09:28, 16th April, 2024. Wednesday.
+
