@@ -79,6 +79,12 @@ if(ANDROID)
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+    receivethread.cpp
+    receivethread.h
+    crc.h
+    QComboBoxMoreSignal.h
+    QComboBoxMoreSignal.cpp
+
     ${TS_FILES}
   )
 else()
@@ -90,6 +96,8 @@ else()
     receivethread.cpp
     receivethread.h
     crc.h
+    QComboBoxMoreSignal.h
+    QComboBoxMoreSignal.cpp
     ${TS_FILES}
   )
 endif()

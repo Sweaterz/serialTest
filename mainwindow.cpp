@@ -13,6 +13,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->openButton, &QPushButton::clicked, this, &MainWindow::openSerial);
     connect(ui->clearButton, &QPushButton::clicked, this, &MainWindow::clearInfo);
     connect(ui->updateButton, &QPushButton::clicked, this, &MainWindow::initSerial);
+    connect(ui->serialBox, &QComboBoxMoreSignal::combo_box_showpopup, this, &MainWindow::initSerial);
+
 //    connect(ui->receiveDataArea, &QListWidget::mousePressEvent, this, &MainWindow::rightClickClear);
 
 

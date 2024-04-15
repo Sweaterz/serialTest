@@ -132,7 +132,7 @@
       <string>波特率：</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="serialBox">
+    <widget class="QComboBoxMoreSignal" name="serialBox">
      <property name="geometry">
       <rect>
        <x>80</x>
@@ -366,6 +366,13 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QComboBoxMoreSignal</class>
+   <extends>QComboBox</extends>
+   <header location="global">QComboBoxMoreSignal.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
