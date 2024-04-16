@@ -75,29 +75,29 @@ install(FILES include/serial/serial.h include/serial/v8stdint.h
 
 if(ANDROID)
   add_library(serialTool SHARED
-    main.cpp
-    mainwindow.cpp
-    mainwindow.h
-    mainwindow.ui
-    receivethread.cpp
-    receivethread.h
-    crc.h
-    QComboBoxMoreSignal.h
-    QComboBoxMoreSignal.cpp
+    src/main.cpp
+    src/mainwindow.cpp
+    include/mainwindow.h
+    src/mainwindow.ui
+    src/receivethread.cpp
+    include/receivethread.h
+    include/crc.h
+    include/QComboBoxMoreSignal.h
+    src/QComboBoxMoreSignal.cpp
 
     ${TS_FILES}
   )
 else()
   add_executable(serialTool
-    main.cpp
-    mainwindow.cpp
-    mainwindow.h
-    mainwindow.ui
-    receivethread.cpp
-    receivethread.h
-    crc.h
-    QComboBoxMoreSignal.h
-    QComboBoxMoreSignal.cpp
+    src/main.cpp
+    src/mainwindow.cpp
+    include/mainwindow.h
+    include/mainwindow.ui
+    src/receivethread.cpp
+    include/receivethread.h
+    include/crc.h
+    include/QComboBoxMoreSignal.h
+    src/QComboBoxMoreSignal.cpp
     ${TS_FILES}
   )
 endif()
