@@ -27,3 +27,10 @@ v1.0.1
 If you have any question, you can put it on the Issues. 
 First edit on 09:28, 16th April, 2024. Wednesday.
 
+
+
+### Open Source Library
+The serial library
+- [wjwwood/serial](https://github.com/wjwwood/serial)  
+
+Specifically see [LICENSE](https://github.com/sweaterz/serialTest/LICENSE) here.
