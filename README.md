@@ -12,6 +12,7 @@ The project has already been released. You can download it from [**Releases**](h
 ### Released Version
 v1.0.1
 
+![sample](images/sample.png)  
 
 ### Todo List:
 - [x] UI布局  UI layout
