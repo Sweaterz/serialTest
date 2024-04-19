@@ -165,6 +165,13 @@ int MainWindow::parseData(std::vector<uint8_t> &hexData)
     {
         bool HB_flag = false;
         int timeStamp[4];
+        if(length != 17)
+        {
+            HB_flag = false;
+            std::cout << "心跳包 长度异常"<< std::endl;
+            content += "心跳包 长度异常";
+            return -1;
+        }
         int xorByte = hexData[0] ^ hexData [1] ^ hexData[2];
         for(int i = 3; i < length; i++)
         {
@@ -229,7 +236,6 @@ int MainWindow::parseData(std::vector<uint8_t> &hexData)
         int xorByte = hexData[0] ^ hexData [1] ^ hexData[2];
         int vehType;
         content += "接收仪表数据：";
-
         if(hexData[length - 2] != 3)
         {
             flag = false;
