@@ -18,6 +18,7 @@ void receiveThread::set(std::string port, uint32_t baudrate)
 
 void receiveThread::run()
 {
+
     this->stopFlag = true;
 
     serial::Serial openedPort(this->port, this->baudrate, serial::Timeout::simpleTimeout(1000));
@@ -34,13 +35,25 @@ void receiveThread::run()
 
     while(stopFlag)
     {
-        int len = openedPort.available();
-
+        int len;
+        try
+        {
+            len = openedPort.available();
+        }
+        catch(const serial::IOException& e)
+        {
+              std::cerr << e.what() << std::endl;
+              std::cout << "11111111111" << std:: endl;
+              stopFlag = false;
+              emit stopSig();
+              break;
+        }
         if(len > 0)
         {
             QString data;
             std::string originData;
             originData = openedPort.readline(65535, "\r\n");//这里默认换行是'\n'
+
             std::cout << "read data:" << originData.size()<< std::endl;
 
 //            QByteArray bytedata = originData.c_str();
@@ -57,11 +70,10 @@ void receiveThread::run()
 //            std::cout << static_cast<uint8_t>(data2[0]) << std::endl;
 //            std::cout << static_cast<int>(static_cast<uint8_t>(data[0])) << std::endl;
 
-
-
             emit receiveData(this->m_data);
         }
     }
+
 
 }
 

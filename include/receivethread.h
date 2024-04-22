@@ -22,6 +22,7 @@ public:
 
 signals:
     void receiveData(const QByteArray&);
+    void stopSig();
 private:
     QByteArray m_data;
 

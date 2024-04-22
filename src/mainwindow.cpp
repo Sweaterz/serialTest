@@ -23,7 +23,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->receiveDataArea, &QListWidget::currentRowChanged, this, &MainWindow::updateParseAreaCurrentRow);
     connect(ui->parseDataArea, &QListWidget::currentRowChanged, this, &MainWindow::updateReceiveAreaCurrentRow);
 
-
 }
 
 void MainWindow::initSerial()
@@ -83,6 +82,8 @@ void MainWindow::openSerial()
 
         receive_t = new receiveThread();
         connect(receive_t, &receiveThread::receiveData, this, &MainWindow::showData);
+        connect(receive_t, &receiveThread::stopSig, this, &MainWindow::stopReceiving);
+
         std::cout << baudrate << std::endl;
         receive_t->set(port, baudrate);
         receive_t->start();
@@ -94,12 +95,23 @@ void MainWindow::openSerial()
         receive_t->stop();
         this->ui->openButton->setText("打开");
         disconnect(receive_t, &receiveThread::receiveData, this, &MainWindow::showData);
-
+        disconnect(receive_t, &receiveThread::stopSig, this, &MainWindow::stopReceiving);
         delete receive_t;
+        QMessageBox::information(NULL, "串口消息", "串口关闭");
+
     }
 
 
 }
+
+// 停止接收数据
+void MainWindow::stopReceiving()
+{
+    QMessageBox::warning(NULL, "串口消息", "串口异常！请检查串口连接。");
+    this->ui->openButton->setText("打开");
+
+}
+
 
 // 显示接收数据
 void MainWindow::showData(const QByteArray& data)

@@ -33,7 +33,7 @@ private:
     void openSerial();
     void updateReceiveAreaCurrentRow();
     void updateParseAreaCurrentRow();
-
+    void stopReceiving();
     void showData(const QByteArray&);
     void slotCustomMenuRequested(QPoint pos);
     int parseData(std::vector<uint8_t>&);
